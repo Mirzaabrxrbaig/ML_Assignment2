@@ -14,16 +14,21 @@ selected = st.selectbox("Select model", model_names)
 
 if uploaded:
     data = pd.read_csv(uploaded)
+
+    data = data.drop(columns=["RowNumber","CustomerId","Surname"], errors="ignore")
+    data = pd.get_dummies(data, drop_first=True)
+
     model = joblib.load(f"saved_models/{selected}.pkl")
 
     if "Exited" in data.columns:
-        y_true=data["Exited"]
-        X=data.drop("Exited",axis=1)
+        y_true = data["Exited"]
+        X = data.drop("Exited", axis=1)
     else:
         y_true=None
         X=data
 
     predictions=model.predict(X)
+
 
     st.write("Predictions:")
     st.write(predictions)
