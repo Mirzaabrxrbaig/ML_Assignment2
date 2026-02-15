@@ -9,7 +9,7 @@ st.title("ML Classification App")
 
 uploaded = st.file_uploader("Upload test CSV", type=["csv"])
 
-model_names = [f.replace(".pkl","") for f in os.listdir("saved_models")]
+model_names = [f.replace(".pkl","") for f in os.listdir("saved_models") if f.endswith(".pkl")]
 selected = st.selectbox("Select model", model_names)
 
 if uploaded:
